@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 542060247}
   - component: {fileID: 542060248}
   m_Layer: 0
-  m_Name: Physics System Manager
+  m_Name: Physics System Group Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -385,3 +385,72 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0bae2b310eee4059a5dcb22cefbbdd6, type: 3}
+--- !u!1001 &6825714329017731874
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.24347611
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719585, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110938287529719591, guid: 58bd01393e0274a789b88c1c2cab5dc9,
+        type: 3}
+      propertyPath: m_Name
+      value: Uranus
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 58bd01393e0274a789b88c1c2cab5dc9, type: 3}

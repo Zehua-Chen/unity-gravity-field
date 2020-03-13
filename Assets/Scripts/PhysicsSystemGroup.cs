@@ -1,5 +1,8 @@
 ﻿using Unity.Entities;
 
-public class PhysicsSystemGroup : ComponentSystemGroup
+namespace GravityField
 {
+    public class PhysicsSystemGroup : ComponentSystemGroup
+    {
+    }
 }

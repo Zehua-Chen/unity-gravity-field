@@ -1,66 +1,68 @@
 ﻿using UnityEngine;
-using UnityEngine.PlayerLoop;
 using Unity.Entities;
 using Unity.Collections;
 
-[UpdateInGroup(typeof(PhysicsSystemGroup))]
-public class GravityFieldSystem : ComponentSystem
+namespace GravityField
 {
-    EntityQuery _query;
-
-    public float G { get; set; } = 6.67f;
-
-    protected override void OnCreate()
+    [UpdateInGroup(typeof(PhysicsSystemGroup))]
+    public class GravityFieldSystem : ComponentSystem
     {
-        _query = this.EntityManager.CreateEntityQuery(
-            new ComponentType(typeof(GravityField)),
-            new ComponentType(typeof(Rigidbody2D)));
-    }
+        EntityQuery _query;
 
-    protected override void OnUpdate()
-    {
-        using (NativeArray<Entity> entities = _query.ToEntityArray(Allocator.TempJob))
+        public float G { get; set; } = 6.67f;
+
+        protected override void OnCreate()
         {
-            for (int a = 0; a < entities.Length; a++)
+            _query = this.EntityManager.CreateEntityQuery(
+                new ComponentType(typeof(GravityField)),
+                new ComponentType(typeof(Rigidbody2D)));
+        }
+
+        protected override void OnUpdate()
+        {
+            using (NativeArray<Entity> entities = _query.ToEntityArray(Allocator.TempJob))
             {
-                Entity entityA = entities[a];
-                Rigidbody2D rigA = this.EntityManager.GetComponentObject<Rigidbody2D>(entityA);
-                GravityField fieldA = this.EntityManager.GetComponentData<GravityField>(entityA);
-                float massA = rigA.mass;
-
-                for (int b = 0; b < entities.Length; b++)
+                for (int a = 0; a < entities.Length; a++)
                 {
-                    Entity entityB = entities[b];
+                    Entity entityA = entities[a];
+                    Rigidbody2D rigA = this.EntityManager.GetComponentObject<Rigidbody2D>(entityA);
+                    GravityField fieldA = this.EntityManager.GetComponentData<GravityField>(entityA);
+                    float massA = rigA.mass;
 
-                    if (entityA == entityB)
+                    for (int b = 0; b < entities.Length; b++)
                     {
-                        continue;
-                    }
+                        Entity entityB = entities[b];
 
-                    Rigidbody2D rigB = this.EntityManager.GetComponentObject<Rigidbody2D>(entityB);
-                    GravityField fieldB = this.EntityManager.GetComponentData<GravityField>(entityB);
-                    float massB = rigB.mass;
+                        if (entityA == entityB)
+                        {
+                            continue;
+                        }
 
-                    Vector2 difference = rigA.position - rigB.position;
-                    float distance = difference.magnitude;
-                    float gravity = this.Gravity(in massA, in massB, in distance);
+                        Rigidbody2D rigB = this.EntityManager.GetComponentObject<Rigidbody2D>(entityB);
+                        GravityField fieldB = this.EntityManager.GetComponentData<GravityField>(entityB);
+                        float massB = rigB.mass;
 
-                    if (distance <= fieldA.Range)
-                    {
-                        rigA.AddForce(difference.normalized * gravity * -1.0f);
-                    }
+                        Vector2 difference = rigA.position - rigB.position;
+                        float distance = difference.magnitude;
+                        float gravity = this.Gravity(in massA, in massB, in distance);
 
-                    if (distance <= fieldB.Range)
-                    {
-                        rigB.AddForce(difference.normalized * gravity);
+                        if (distance <= fieldA.Range)
+                        {
+                            rigA.AddForce(difference.normalized * gravity * -1.0f);
+                        }
+
+                        if (distance <= fieldB.Range)
+                        {
+                            rigB.AddForce(difference.normalized * gravity);
+                        }
                     }
                 }
             }
         }
-    }
 
-    public float Gravity(in float mA, in float mB, in float distance)
-    {
-        return ((mA * mB) / Mathf.Pow(distance, 2.0f)) * this.G;
+        public float Gravity(in float mA, in float mB, in float distance)
+        {
+            return ((mA * mB) / Mathf.Pow(distance, 2.0f)) * this.G;
+        }
     }
 }

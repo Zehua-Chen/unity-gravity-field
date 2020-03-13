@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class GravityFieldAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+namespace GravityField
 {
-    [SerializeField]
-    public float _range = 100.0f;
-
-    public void Convert(
-        Entity entity,
-        EntityManager dstManager,
-        GameObjectConversionSystem conversionSystem)
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class GravityFieldAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
-        dstManager.AddComponentData(entity, new GravityField
+        [SerializeField]
+        public float _range = 100.0f;
+
+        public void Convert(
+            Entity entity,
+            EntityManager dstManager,
+            GameObjectConversionSystem conversionSystem)
         {
-            Range = _range
-        });
+            dstManager.AddComponentData(entity, new GravityField
+            {
+                Range = _range
+            });
+        }
     }
 }
