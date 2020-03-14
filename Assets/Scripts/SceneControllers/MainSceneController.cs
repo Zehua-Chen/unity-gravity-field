@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GravityField.SceneControllers
 {
@@ -7,6 +7,9 @@ namespace GravityField.SceneControllers
     {
         [SerializeField]
         Camera _camera = null;
+
+        [SerializeField]
+        bool _introduction = true;
 
         [Header("Planet Spawn Settings")]
         [SerializeField]
@@ -17,22 +20,17 @@ namespace GravityField.SceneControllers
 
         [Header("UI")]
         [SerializeField]
-        GameObject _promptText = null;
-
-        [SerializeField]
-        float _visibleTime = 2.0f;
-
-        [SerializeField]
-        float _disappearDuration = 1.0f;
-
-        private void Start()
-        {
-            StartCoroutine(DestroyPrompt());
-        }
+        GameObject _introductionPanel = null;
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!_introduction && Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                return;
+            }
+
+            if (!_introduction && Input.GetMouseButtonDown(0))
             {
                 CreateMars(_camera.ScreenToWorldPoint(Input.mousePosition));
             }
@@ -49,20 +47,10 @@ namespace GravityField.SceneControllers
             transform.localScale = new Vector3(_marsScale, _marsScale, 0.0f);
         }
 
-        private IEnumerator DestroyPrompt()
+        public void OnAcknoledge()
         {
-            yield return new WaitForSecondsRealtime(_visibleTime);
-
-            AnimationCurve curve = AnimationCurve.EaseInOut(0.0f, 1.0f, _disappearDuration, 0.0f);
-            CanvasRenderer renderer = _promptText.GetComponent<CanvasRenderer>();
-
-            for (float t = 0.0f; t < _disappearDuration; t += Time.deltaTime)
-            {
-                renderer.SetAlpha(curve.Evaluate(t));
-                yield return null;
-            }
-
-            GameObject.Destroy(_promptText);
+            GameObject.Destroy(_introductionPanel);
+            _introduction = false;
         }
     }
 }
