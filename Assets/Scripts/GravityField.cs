@@ -1,18 +1,24 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GravityField
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class GravityField : MonoBehaviour
     {
-        static HashSet<GravityField> _fields = new HashSet<GravityField>();
-        static public HashSet<GravityField> Fields => _fields;
+        static GravityFields _fields = new GravityFields();
+        static public GravityFields Fields => _fields;
 
         Rigidbody2D _rig = null;
 
         public float Range = 100.0f;
         public float G = 6.67f;
+
+        /// <summary>
+        /// A hash like index that we use to store this gravity field.
+        /// We don't use HashSet to avoid using foreach in update loop
+        /// </summary>
+        [HideInInspector]
+        public int Index = -1;
 
         private void Awake()
         {
@@ -21,7 +27,7 @@ namespace GravityField
 
         private void OnEnable()
         {
-            _fields.Add(this);
+            _fields.Add(this, _rig);
         }
 
         private void OnDisable()
@@ -33,14 +39,17 @@ namespace GravityField
         {
             float mass = _rig.mass;
 
-            foreach (GravityField otherField in _fields)
+            for (int i = 0; i < _fields.Count; i++)
             {
+                GravityField otherField;
+                Rigidbody2D otherRig;
+
+                _fields.Get(i, out otherField, out otherRig);
+
                 if (otherField == this)
                 {
                     continue;
                 }
-
-                Rigidbody2D otherRig = otherField.GetComponent<Rigidbody2D>();
 
                 float otherMass = otherRig.mass;
 
